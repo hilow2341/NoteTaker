@@ -15,3 +15,12 @@ router.post("/notes", (req, res) => {
       .then((note) => res.json(note))
       .catch(err => res.status(500).json(err));
   });
+
+router.delete("/notes/:id", function(req, res) {
+  store
+    .removeNote(req.params.id)
+    .then(() => res.json({ ok: true }))
+    .catch(err => res.status(500).json(err));
+});
+
+module.exports = router;
