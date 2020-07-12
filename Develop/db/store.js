@@ -31,3 +31,20 @@ class Store {
       return parsedNotes;
     });
   }
+
+  addNote(note) {
+    const { title, text } = note;
+
+    if (!title || !text) {
+      throw new Error("Note 'title' and 'text' cannot be blank");
+    }
+
+    // Increment `this.lastId` and assign it to `newNote.id`
+    const newNote = { title, text, id: ++this.lastId };
+
+    // Get all notes, add the new note, write all the updated notes, return the newNote
+    return this.getNotes()
+      .then(notes => [...notes, newNote])
+      .then(updatedNotes => this.write(updatedNotes))
+      .then(() => newNote);
+  }
